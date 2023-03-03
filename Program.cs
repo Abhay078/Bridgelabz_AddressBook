@@ -57,7 +57,13 @@
                     case 11:
                         add.SortPeopleByCityStateOrZip();
                         break;
-                    
+                    case 14:
+                        add.ReadWriteJSON();
+                        break;
+                    case 15:
+                        AdoAddressSystem ado=new AdoAddressSystem();
+                        ado.RetrieveData();
+                        break;
 
                 }
             }

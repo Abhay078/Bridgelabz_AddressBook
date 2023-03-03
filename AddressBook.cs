@@ -363,6 +363,42 @@ namespace AddressBookSystem
 
         }
 
-        
+        public void ReadWriteText()
+        {
+            Console.WriteLine("Press 1 for Reading Text File\n Press 2 for Writing into text File");
+            Console.WriteLine("Enter your choice");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteContacts.txt";
+            switch (choice)
+            {
+                case 1:
+
+                    if (File.Exists(path))
+                    {
+                        string data = File.ReadAllText(path);
+                        Console.WriteLine(data);
+
+                    }
+                    break;
+                case 2:
+
+                    try
+                    {
+
+                        using (StreamWriter sw = new StreamWriter(path, true))
+                        {
+                            var entry = AddContacts();
+                            sw.WriteLine(entry.ToString());
+                            sw.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+            }
+
+        }
     }
 }
