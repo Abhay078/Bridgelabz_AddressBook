@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,7 +190,7 @@ namespace AddressBookSystem
             List<List<Contact>> person = new List<List<Contact>>();
             foreach (string book in AddressBookName.Keys)
             {
-                person.Add( AddressBookName[book]);
+                person.Add(AddressBookName[book]);
             }
             switch (input)
             {
@@ -314,24 +315,24 @@ namespace AddressBookSystem
             Console.WriteLine("Press 1 for Sorting by city\n Press 2 for sorting by State \n Press 3 for sorting by Zip Code");
             Console.WriteLine("");
             Console.WriteLine("----------------------------------------------------------------------------------------------");
-            int choice=Convert.ToInt32(Console.ReadLine());
+            int choice = Convert.ToInt32(Console.ReadLine());
             List<Contact> person = new List<Contact>();
             switch (choice)
             {
                 case 1:
-                    
-                    foreach(string book in AddressBookName.Keys)
+
+                    foreach (string book in AddressBookName.Keys)
                     {
                         person = AddressBookName[book].ToList();
-                        person.Sort((x,y)=>x.city.CompareTo(y.city));
-                        foreach(Contact contact in person)
+                        person.Sort((x, y) => x.city.CompareTo(y.city));
+                        foreach (Contact contact in person)
                         {
                             Console.WriteLine(contact.ToString());
                         }
                     }
                     break;
                 case 2:
-                    
+
                     foreach (string book in AddressBookName.Keys)
                     {
                         person = AddressBookName[book].ToList();
@@ -343,7 +344,7 @@ namespace AddressBookSystem
                     }
                     break;
                 case 3:
-                    
+
                     foreach (string book in AddressBookName.Keys)
                     {
                         person = AddressBookName[book].ToList();
@@ -358,80 +359,10 @@ namespace AddressBookSystem
             }
             Console.WriteLine("-----------------------------------------------------------------------------------------");
 
-            
-            
-        }
-        public void ReadWriteText()
-        {
-            Console.WriteLine("Press 1 for Reading Text File\n Press 2 for Writing into text File");
-            Console.WriteLine("Enter your choice");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteContacts.txt";
-            switch (choice)
-            {
-                case 1:
-                    
-                    if (File.Exists(path))
-                    {
-                        string data = File.ReadAllText(path);
-                        Console.WriteLine(data);
 
-                    }
-                    break;
-                case 2:
-                    
-                    try
-                    {
-
-                        using (StreamWriter sw = new StreamWriter(path,true))
-                        {
-                            var entry=AddContacts();
-                            sw.WriteLine(entry.ToString());
-                            sw.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-            }
 
         }
 
-        public void ReadWriteCSV()
-        {
-            Console.WriteLine("Press 1 for Reading CSV File\n Press 2 for Writing into CSV File");
-            Console.WriteLine("Enter your choice");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteCSV.csv";
-            switch (choice)
-            {
-                case 1:
-                    using(var reader=new StreamReader(path))
-                    using(var csv=new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
-                    {
-                        var records = csv.GetRecords<Contact>();
-                        foreach(var record in records)
-                        {
-                            Console.WriteLine(record.ToString());
-                        }
-                    }
-                    break;
-                case 2:
-                    Console.WriteLine("Enter the number of contacts that you want to enter");
-                    int count = Convert.ToInt32(Console.ReadLine());
-                    List<Contact> multiContact = multipleAddContact(count); 
-
-                    using(var writer=new StreamWriter(path,true))
-                    using(var csv=new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
-                    {
-                        csv.WriteRecords(multiContact);
-                    }
-                    break;
-
-
-            }
-        }
+        
     }
 }
