@@ -22,7 +22,11 @@
                         break;
 
                     case 2:
+                        Console.WriteLine("Enter the first name of contact that you want to edit");
+                        string name = Console.ReadLine();
+                        add.EditContact(name);
                         break;
+                        
                 }
             }
         }

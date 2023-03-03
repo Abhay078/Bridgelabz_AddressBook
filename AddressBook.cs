@@ -46,5 +46,41 @@ namespace AddressBookSystem
             contacts.Add(newContact);
             return newContact;
         }
+
+        public void EditContact(string firstname)
+        {
+
+
+            firstname = firstname.ToLower();
+            foreach (Contact contact in contacts)
+            {
+                if (firstname.Equals(contact.firstName.ToLower()))
+                {
+                    Console.WriteLine("Enter first name that you want to update");
+                    contact.firstName = Console.ReadLine();
+                    Console.WriteLine("Enter last name that you want to update");
+                    contact.lastName = Console.ReadLine();
+                    Console.WriteLine("Enter city that you want to update");
+                    contact.city = Console.ReadLine();
+                    Console.WriteLine("Enter state that you want to update");
+                    contact.state = Console.ReadLine();
+                    Console.WriteLine("Enter address that you want to update");
+                    contact.address = Console.ReadLine();
+                    Console.WriteLine("Enter ZipCode that you want to update");
+                    contact.zip = Console.ReadLine();
+                    Console.WriteLine("Enter phone number that you want to update");
+                    contact.Phone = Console.ReadLine();
+                    Console.WriteLine("Enter email that you want to update");
+                    contact.email = Console.ReadLine();
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Contact not found");
+                }
+
+            }
+        }
     }
 }
