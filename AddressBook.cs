@@ -130,5 +130,25 @@ namespace AddressBookSystem
 
             return AddressBookContact;
         }
+
+        public void AddAddressBook()
+        {
+            Console.WriteLine("Enter the name of Address Book that you want");
+            string bookName = Console.ReadLine();
+            Console.WriteLine("Enter the number of contact you want to enter in this Address Book");
+            int count = Convert.ToInt32(Console.ReadLine());
+            if (!AddressBookName.ContainsKey(bookName))
+            {
+                List<Contact> person = multipleAddContact(count);
+                AddressBookName.Add(bookName, person);
+            }
+            else
+            {
+                Console.WriteLine("Enter the correct name of book . It is Already Exists");
+            }
+
+            Console.WriteLine("Contact is successfully added to Address Book");
+
+        }
     }
 }
