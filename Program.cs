@@ -26,6 +26,14 @@
                         string name = Console.ReadLine();
                         add.EditContact(name);
                         break;
+                    case 3:
+                        Console.WriteLine("Enter the first name of contact that you want to edit");
+                        string firstname = Console.ReadLine();
+                        add.DeleteContact(firstname);
+                        break;
+                    case 4:
+                        add.ViewContact();
+                        break;
                         
                 }
             }

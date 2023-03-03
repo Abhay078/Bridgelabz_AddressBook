@@ -82,5 +82,38 @@ namespace AddressBookSystem
 
             }
         }
+
+        public void DeleteContact(string firstname)
+        {
+            firstname = firstname.ToLower();
+            foreach (var contact in contacts)
+            {
+                if (firstname.Equals(contact.firstName.ToLower()))
+                {
+                    contacts.Remove(contact);
+                    Console.WriteLine("The Contact is Successfully removed");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect name or conatct not found");
+                }
+            }
+        }
+
+        public void ViewContact()
+        {
+            foreach (var book in AddressBookName.Keys)
+            {
+                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.WriteLine("AddressBook:-  " + book);
+
+                List<Contact> person = AddressBookName[book];
+                foreach (var people in person)
+                {
+                    Console.WriteLine(people.ToString());
+                }
+            }
+        }
     }
 }
