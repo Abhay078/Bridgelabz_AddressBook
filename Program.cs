@@ -34,7 +34,12 @@
                     case 4:
                         add.ViewContact();
                         break;
-                        
+                    case 5:
+                        Console.WriteLine("Enter the number of contacts you want to enter");
+                        int count = Convert.ToInt32(Console.ReadLine());
+                        add.multipleAddContact(count);
+                        break;
+
                 }
             }
         }
