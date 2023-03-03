@@ -48,6 +48,9 @@
                     case 8:
                         add.ViewPersonByStateOrCity();
                         break;
+                    case 9:
+                        add.CountByStateOrCity();
+                        break;
 
                 }
             }

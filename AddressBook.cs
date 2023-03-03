@@ -240,4 +240,47 @@ namespace AddressBookSystem
 
             }
         }
+        public void CountByStateOrCity()
+        {
+            Console.WriteLine("Enter the Choice Whether you want to view person by State or City");
+            Console.WriteLine("Press 1 for Viewing Count of City wise Contact\n Press 2 for Viewing Count of state Wise Contact");
+            int input = Convert.ToInt32(Console.ReadLine());
+            switch (input)
+            {
+                case 1:
+
+                    foreach (var kvp in CityWiseDict)
+                    {
+                        Console.Write("City :-  " + kvp.Key + "\t");
+                        int count = 0;
+
+                        foreach (Contact contact in kvp.Value)
+                        {
+                            count++;
+
+                        }
+                        Console.WriteLine($" address Book has {count} Person from this city ");
+                    }
+                    break;
+                case 2:
+
+                    foreach (var kvp in StateWiseDict)
+                    {
+                        Console.Write("State :-  " + kvp.Key + "\t");
+                        int counter = 0;
+
+                        foreach (Contact contact in kvp.Value)
+                        {
+                            counter++;
+
+                        }
+                        Console.WriteLine($" Address Book has {counter} Person from this state ");
+                    }
+                    break;
+
+
+            }
+
+        }
+    }
 }
