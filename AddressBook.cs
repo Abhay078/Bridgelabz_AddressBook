@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CsvHelper;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -188,7 +190,7 @@ namespace AddressBookSystem
             List<List<Contact>> person = new List<List<Contact>>();
             foreach (string book in AddressBookName.Keys)
             {
-                person.Add( AddressBookName[book]);
+                person.Add(AddressBookName[book]);
             }
             switch (input)
             {
@@ -305,6 +307,98 @@ namespace AddressBookSystem
                 }
 
             }
+        }
+        public void SortPeopleByCityStateOrZip()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Enter the Choice :--");
+            Console.WriteLine("Press 1 for Sorting by city\n Press 2 for sorting by State \n Press 3 for sorting by Zip Code");
+            Console.WriteLine("");
+            Console.WriteLine("----------------------------------------------------------------------------------------------");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            List<Contact> person = new List<Contact>();
+            switch (choice)
+            {
+                case 1:
+
+                    foreach (string book in AddressBookName.Keys)
+                    {
+                        person = AddressBookName[book].ToList();
+                        person.Sort((x, y) => x.city.CompareTo(y.city));
+                        foreach (Contact contact in person)
+                        {
+                            Console.WriteLine(contact.ToString());
+                        }
+                    }
+                    break;
+                case 2:
+
+                    foreach (string book in AddressBookName.Keys)
+                    {
+                        person = AddressBookName[book].ToList();
+                        person.Sort((x, y) => x.state.CompareTo(y.state));
+                        foreach (Contact contact in person)
+                        {
+                            Console.WriteLine(contact.ToString());
+                        }
+                    }
+                    break;
+                case 3:
+
+                    foreach (string book in AddressBookName.Keys)
+                    {
+                        person = AddressBookName[book].ToList();
+                        person.Sort((x, y) => x.zip.CompareTo(y.zip));
+                        foreach (Contact contact in person)
+                        {
+                            Console.WriteLine(contact.ToString());
+                        }
+                    }
+                    break;
+
+            }
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+
+
+        }
+
+        public void ReadWriteText()
+        {
+            Console.WriteLine("Press 1 for Reading Text File\n Press 2 for Writing into text File");
+            Console.WriteLine("Enter your choice");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteContacts.txt";
+            switch (choice)
+            {
+                case 1:
+
+                    if (File.Exists(path))
+                    {
+                        string data = File.ReadAllText(path);
+                        Console.WriteLine(data);
+
+                    }
+                    break;
+                case 2:
+
+                    try
+                    {
+
+                        using (StreamWriter sw = new StreamWriter(path, true))
+                        {
+                            var entry = AddContacts();
+                            sw.WriteLine(entry.ToString());
+                            sw.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+            }
+
         }
     }
 }

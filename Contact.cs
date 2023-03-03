@@ -23,10 +23,11 @@ namespace AddressBookSystem
         {
             return this.firstName.CompareTo(other.firstName);
         }
+        
 
         public override string ToString()
         {
-            return $"Name: {firstName} {lastName} City: {city} State: {state} ZIP: {zip} Phone: {Phone} Email : {email}";
+            return $"Name: {firstName} {lastName} , City: {city} , State: {state} , ZIP: {zip} , Phone: {Phone} , Email : {email}";
         }
 
     }
