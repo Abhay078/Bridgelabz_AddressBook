@@ -39,6 +39,18 @@
                         int count = Convert.ToInt32(Console.ReadLine());
                         add.multipleAddContact(count);
                         break;
+                    case 6:
+                        add.AddAddressBook();
+                        break;
+                    case 7:
+                        add.SearchContactAcrossBooks();
+                        break;
+                    case 8:
+                        add.ViewPersonByStateOrCity();
+                        break;
+                    case 9:
+                        add.CountByStateOrCity();
+                        break;
 
                 }
             }
