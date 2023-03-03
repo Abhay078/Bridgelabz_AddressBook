@@ -54,6 +54,10 @@
                     case 10:
                         add.SortByPersonName();
                         break;
+                    case 11:
+                        add.SortPeopleByCityStateOrZip();
+                        break;
+                    
 
                 }
             }
