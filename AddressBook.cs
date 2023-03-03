@@ -150,5 +150,34 @@ namespace AddressBookSystem
             Console.WriteLine("Contact is successfully added to Address Book");
 
         }
+
+        public void SearchContactAcrossBooks()
+        {
+
+            Console.WriteLine("Enter the City you want to search in");
+            string city1 = Console.ReadLine();
+
+            Console.WriteLine("Enter the State you want to search in");
+            string state = Console.ReadLine();
+            List<List<Contact>> record = new List<List<Contact>>();
+
+            foreach (string book in AddressBookName.Keys)
+            {
+                record.Add(AddressBookName[book]);
+
+            }
+            foreach (var person in record)
+            {
+                var list = person.Where(x => x.city == city1 || x.state == state);
+                var name = list.Select(x => x.firstName).ToList();
+                foreach (var names in name)
+                {
+                    Console.WriteLine(names);
+                }
+
+            }
+
+
+        }
     }
 }
