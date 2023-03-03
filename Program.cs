@@ -45,6 +45,9 @@
                     case 7:
                         add.SearchContactAcrossBooks();
                         break;
+                    case 8:
+                        add.ViewPersonByStateOrCity();
+                        break;
 
                 }
             }

@@ -179,5 +179,65 @@ namespace AddressBookSystem
 
 
         }
-    }
+
+        public void ViewPersonByStateOrCity()
+        {
+            Console.WriteLine("Enter the Choice Whether you want to view person by State or City");
+            Console.WriteLine("Press 1 for Viewing City wise Contact\n Press 2 for Viewing state Wise Contact");
+            int input = Convert.ToInt32(Console.ReadLine());
+            List<Contact> person = new List<Contact>();
+            foreach (string book in AddressBookName.Keys)
+            {
+                person = AddressBookName[book];
+            }
+            switch (input)
+            {
+                case 1:
+                    Console.WriteLine("The City Wise Dictionary of all contact is:- ");
+                    foreach (Contact people in person)
+                    {
+                        if (!CityWiseDict.ContainsKey(people.city))
+                        {
+                            CityWiseDict.Add(people.city, new List<Contact>());
+
+                        }
+                        CityWiseDict[people.city].Add(people);
+
+                    }
+                    foreach (var kvp in CityWiseDict)
+                    {
+
+                        Console.WriteLine("City :-  " + kvp.Key);
+                        foreach (Contact contact in kvp.Value)
+                        {
+                            Console.WriteLine($"First name :-  {contact.firstName}      State :-  {contact.state}      Phone Number :- {contact.Phone}");
+                        }
+                    }
+
+                    break;
+                case 2:
+                    Console.WriteLine("The State Wise Dictionary of all contact is:- ");
+                    foreach (Contact people in person)
+                    {
+                        if (!StateWiseDict.ContainsKey(people.state))
+                        {
+                            StateWiseDict.Add(people.state, new List<Contact>());
+
+                        }
+                        StateWiseDict[people.state].Add(people);
+
+                    }
+                    foreach (var kvp in StateWiseDict)
+                    {
+                        Console.WriteLine("State :-  " + kvp.Key);
+
+                        foreach (Contact contact in kvp.Value)
+                        {
+                            Console.WriteLine($"First name :-  {contact.firstName}       State :-  {contact.state}       Phone Number :-  {contact.Phone}");
+                        }
+                    }
+                    break;
+
+            }
+        }
 }
