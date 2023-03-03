@@ -185,23 +185,26 @@ namespace AddressBookSystem
             Console.WriteLine("Enter the Choice Whether you want to view person by State or City");
             Console.WriteLine("Press 1 for Viewing City wise Contact\n Press 2 for Viewing state Wise Contact");
             int input = Convert.ToInt32(Console.ReadLine());
-            List<Contact> person = new List<Contact>();
+            List<List<Contact>> person = new List<List<Contact>>();
             foreach (string book in AddressBookName.Keys)
             {
-                person = AddressBookName[book];
+                person.Add( AddressBookName[book]);
             }
             switch (input)
             {
                 case 1:
                     Console.WriteLine("The City Wise Dictionary of all contact is:- ");
-                    foreach (Contact people in person)
+                    foreach (List<Contact> people in person)
                     {
-                        if (!CityWiseDict.ContainsKey(people.city))
+                        foreach (Contact contact in people)
                         {
-                            CityWiseDict.Add(people.city, new List<Contact>());
+                            if (!CityWiseDict.ContainsKey(contact.city))
+                            {
+                                CityWiseDict.Add(contact.city, new List<Contact>());
 
+                            }
+                            CityWiseDict[contact.city].Add(contact);
                         }
-                        CityWiseDict[people.city].Add(people);
 
                     }
                     foreach (var kvp in CityWiseDict)
@@ -217,14 +220,17 @@ namespace AddressBookSystem
                     break;
                 case 2:
                     Console.WriteLine("The State Wise Dictionary of all contact is:- ");
-                    foreach (Contact people in person)
+                    foreach (List<Contact> people in person)
                     {
-                        if (!StateWiseDict.ContainsKey(people.state))
+                        foreach (Contact contact in people)
                         {
-                            StateWiseDict.Add(people.state, new List<Contact>());
+                            if (!StateWiseDict.ContainsKey(contact.state))
+                            {
+                                StateWiseDict.Add(contact.state, new List<Contact>());
 
+                            }
+                            StateWiseDict[contact.state].Add(contact);
                         }
-                        StateWiseDict[people.state].Add(people);
 
                     }
                     foreach (var kvp in StateWiseDict)
@@ -281,6 +287,24 @@ namespace AddressBookSystem
 
             }
 
+        }
+
+        public void SortByPersonName()
+        {
+            Console.WriteLine("sorting the contacts by their first name");
+            List<Contact> person = new List<Contact>();
+            foreach (var book in AddressBookName.Keys)
+            {
+                person = AddressBookName[book].ToList();
+                person.Sort();
+
+                foreach (Contact people in person)
+                {
+
+                    Console.WriteLine(people.ToString());
+                }
+
+            }
         }
     }
 }
