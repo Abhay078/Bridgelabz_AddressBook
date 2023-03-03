@@ -115,5 +115,20 @@ namespace AddressBookSystem
                 }
             }
         }
+
+        public List<Contact> multipleAddContact(int count)
+        {
+            List<Contact> AddressBookContact = new List<Contact>();
+            for (int i = 1; i <= count; i++)
+            {
+                Console.WriteLine("Enter the details for contact no {0}", i);
+                AddressBookContact.Add(AddContacts());
+
+
+            }
+
+
+            return AddressBookContact;
+        }
     }
 }
