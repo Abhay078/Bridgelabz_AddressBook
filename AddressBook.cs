@@ -400,5 +400,43 @@ namespace AddressBookSystem
             }
 
         }
+
+        public void ReadWriteCSV()
+        {
+            Console.WriteLine("Press 1 for Reading CSV File\n Press 2 for Writing into CSV File");
+            Console.WriteLine("Enter your choice");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteCSV.csv";
+            switch (choice)
+            {
+                case 1:
+                    using (var reader = new StreamReader(path))
+                    using (var csv = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<Contact>();
+                        foreach (var record in records)
+                        {
+                            Console.WriteLine(record.ToString());
+                        }
+                    }
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the number of contacts that you want to enter");
+                    int count = Convert.ToInt32(Console.ReadLine());
+                    List<Contact> multiContact = multipleAddContact(count);
+
+                    using (var writer = new StreamWriter(path, true))
+                    using (var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
+                    {
+                        csv.WriteRecords(multiContact);
+                    }
+                    Console.WriteLine("Writing to csv file is done");
+                    break;
+
+
+            }
+        }
+
+        
     }
 }

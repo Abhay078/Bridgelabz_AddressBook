@@ -13,7 +13,7 @@
                 Console.WriteLine("Press 1 for Adding Contact to Address Book\n Press 2 for Editing Existing Contact \n Press 3 for Deleting Contact" +
                     "\n Press 4 for View Contacts \n Press 5 for Adding Multiple Contact at a time\n Press 6 for Adding a Address Book having unique name" +
                     "\n Press 7 for Searching People on City or State\n Press 8 for View Person that are enter according to city or state \n Press 9 for Count number of person by city or state " +
-                    "\n Press 10 for Sort number of people according to their name");
+                    "\n Press 10 for Sort number of people according to their name\n Press 11 for Sort people by state or city or ZIP\n Press 12 for Read and write contacts into text file");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -57,13 +57,14 @@
                     case 11:
                         add.SortPeopleByCityStateOrZip();
                         break;
-                    case 14:
-                        add.ReadWriteJSON();
+                    case 12:
+                        add.ReadWriteText();
                         break;
-                    case 15:
-                        AdoAddressSystem ado=new AdoAddressSystem();
-                        ado.RetrieveData();
+                    case 13:
+                        add.ReadWriteCSV();
                         break;
+
+
 
                 }
             }
