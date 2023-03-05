@@ -63,6 +63,10 @@
                     case 13:
                         add.ReadWriteCSV();
                         break;
+                    case 14:
+                        add.ReadWriteJSON();
+                        break;
+
 
 
 

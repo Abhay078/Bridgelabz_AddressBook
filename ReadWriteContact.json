@@ -1,0 +1,32 @@
+[
+  {
+    "firstName": "Abhay",
+    "address": "130",
+    "city": "LMP",
+    "lastName": "Srivastava",
+    "zip": "262701",
+    "state": "UP",
+    "Phone": "8953171369",
+    "email": "abhay@gmail.com"
+  },
+  {
+    "firstName": "Nitik",
+    "address": "129",
+    "city": "gzb",
+    "lastName": "Sinha",
+    "zip": "201009",
+    "state": "up",
+    "Phone": "989100",
+    "email": "nitik@gmail.com"
+  },
+  {
+    "firstName": "Nitik",
+    "address": "123",
+    "city": "GZB",
+    "lastName": "Upadhyay",
+    "zip": "567891",
+    "state": "UP",
+    "Phone": "765432187",
+    "email": "up@gmail.com"
+  }
+]
