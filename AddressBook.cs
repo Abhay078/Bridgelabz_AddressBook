@@ -10,7 +10,7 @@ namespace AddressBookSystem
 {
     public class AddressBook
     {
-        List<Contact> contacts = new List<Contact>();
+        public List<Contact> contacts = new List<Contact>();
         Dictionary<string, List<Contact>> AddressBookName = new Dictionary<string, List<Contact>>();
         Dictionary<string, List<Contact>> CityWiseDict = new Dictionary<string, List<Contact>>();
         Dictionary<string, List<Contact>> StateWiseDict = new Dictionary<string, List<Contact>>();
@@ -48,6 +48,7 @@ namespace AddressBookSystem
             contacts.Add(newContact);
             return newContact;
         }
+        
 
         public void EditContact(string firstname)
         {
@@ -56,7 +57,7 @@ namespace AddressBookSystem
             firstname = firstname.ToLower();
             foreach (Contact contact in contacts)
             {
-                if (firstname.Equals(contact.firstName.ToLower()))
+                if (firstname.ToLower().Equals(contact.firstName.ToLower()))
                 {
                     Console.WriteLine("Enter first name that you want to update");
                     contact.firstName = Console.ReadLine();
@@ -84,6 +85,7 @@ namespace AddressBookSystem
 
             }
         }
+        
 
         public void DeleteContact(string firstname)
         {
@@ -102,6 +104,8 @@ namespace AddressBookSystem
                 }
             }
         }
+        
+        
 
         public void ViewContact()
         {
@@ -181,6 +185,7 @@ namespace AddressBookSystem
 
 
         }
+       
 
         public void ViewPersonByStateOrCity()
         {
@@ -476,10 +481,73 @@ namespace AddressBookSystem
                     File.WriteAllText(path, jsonToFile);
 
                     Console.WriteLine("Writing to Json File done....");
+                    
                     break;
 
 
             }
+        }
+
+        public bool SearchTestContact(string city)
+        {
+            city = city.ToLower();
+            foreach (var person in contacts)
+            {
+                if (city.Equals(person.city.ToLower()))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public bool DeleteTestContact(string firstname)
+        {
+            firstname = firstname.ToLower();
+            foreach (var contact in contacts)
+            {
+                if (firstname.Equals(contact.firstName.ToLower()))
+                {
+                    contacts.Remove(contact);
+                    return true;
+                }
+
+            }
+            return false;
+
+        }
+
+        public bool EditTestContact(string firstname)
+        {
+            foreach (Contact contact in contacts)
+            {
+                if (firstname.ToLower().Equals(contact.firstName.ToLower()))
+                {
+                    return true;
+
+                }
+
+
+            }
+            return false;
+        }
+
+        public Contact AddTestContact()
+        {
+            Contact c1 = new Contact
+            {
+                firstName = "Abhay",
+                lastName = "Srivastava",
+                address = "130 Civil",
+                city = "Lmp",
+                state = "UP",
+                Phone = "8953171369",
+                email = "Email@gmail.com"
+
+            };
+            return c1;
+
         }
 
 
