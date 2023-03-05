@@ -63,6 +63,15 @@
                     case 13:
                         add.ReadWriteCSV();
                         break;
+                    case 14:
+                        add.ReadWriteJSON();
+                        break;
+                    case 15:
+                        AdoAddressSystem ado = new AdoAddressSystem();
+                        ado.RetrieveData();
+                        break;
+
+
 
 
 

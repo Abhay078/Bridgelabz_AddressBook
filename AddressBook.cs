@@ -437,6 +437,51 @@ namespace AddressBookSystem
             }
         }
 
-        
+        public void ReadWriteJSON()
+        {
+            Console.WriteLine("Press 1 for Reading Json File\n Press 2 for Writing into Json File");
+            Console.WriteLine("Enter your choice");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            string path = "D:\\AddressBookMain\\AddressBookSystem\\ReadWriteContact.json";
+            switch (choice)
+            {
+                case 1:
+                    string json = File.ReadAllText(path);
+                    List<Contact> personFromFile = JsonConvert.DeserializeObject<List<Contact>>(json) ?? new List<Contact>();
+                    Console.WriteLine("---------------------------------------------------------------------------------------------");
+                    Console.WriteLine("");
+                    foreach (var person in personFromFile)
+                    {
+                        Console.WriteLine(person.ToString());
+                    }
+                    Console.WriteLine("");
+                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+
+                    break;
+
+                case 2:
+                    List<Contact> listContact = new List<Contact>();
+                    if (File.Exists(path))
+                    {
+                        string jsonExtract = File.ReadAllText(path);
+                        listContact = JsonConvert.DeserializeObject<List<Contact>>(jsonExtract) ?? new List<Contact>();
+
+                    }
+                    Console.WriteLine("How many contacts you want to enter in Json File");
+                    int count = Convert.ToInt32(Console.ReadLine());
+                    listContact.AddRange(multipleAddContact(count));
+
+
+                    string jsonToFile = JsonConvert.SerializeObject(listContact);
+                    File.WriteAllText(path, jsonToFile);
+
+                    Console.WriteLine("Writing to Json File done....");
+                    break;
+
+
+            }
+        }
+
+
     }
 }
