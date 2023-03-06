@@ -90,7 +90,7 @@
 
                         break;
                     case 19:
-                        
+                        ado.RetrieveContactBasedOnDate();
                         break;
 
 

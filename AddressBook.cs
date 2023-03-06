@@ -60,7 +60,7 @@ namespace AddressBookSystem
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
 
-                string query = "INSERT INTO CONTACTLIST VALUES(@firstName,@lastName,@city,@address,@state,@zip,@Phone,@email)";
+                string query = "INSERT INTO CONTACTLIST VALUES(@firstName,@lastName,@city,@address,@state,@zip,@Phone,@email,GETDATE())";
                 cmd.Parameters.AddWithValue("@firstName", newContact.firstName);
                 cmd.Parameters.AddWithValue("@lastName", newContact.lastName);
                 cmd.Parameters.AddWithValue("@city", newContact.city);
