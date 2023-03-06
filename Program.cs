@@ -16,7 +16,8 @@
                     "\n Press 7 for Searching People on City or State\n Press 8 for View Person that are enter according to city or state \n Press 9 for Count number of person by city or state " +
                     "\n Press 10 for Sort number of people according to their name\n Press 11 for Sort people by state or city or ZIP\n Press 12 for Read and write contacts into text file" +
                     "\n Press 13 for Read and write contacts into CSV file\n Press 14 for Read and write contacts into Json file\n Press 15 for Retrieve Contacts from Database" +
-                    "\n Press 16 for Update Contact in database \n Press 17 for Deleting the Contact from Database \n Press 18 for Exit");
+                    "\n Press 16 for Update Contact in database \n Press 17 for Deleting the Contact from Database \n Press 18 for Checking That data in database" +
+                    "and memory is in sync\n Press 19 for Retrieve Contact that are created today\n Press 20 for Retrieve Contact On state and city\n Press 21 for exit");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -94,6 +95,9 @@
                         break;
                     case 20:
                         ado.GetContactBasedonCityOrState();
+                        break;
+                      case 21:
+                        boolean = false;
                         break;
 
 
