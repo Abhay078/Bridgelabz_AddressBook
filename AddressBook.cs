@@ -2,7 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,10 +14,12 @@ namespace AddressBookSystem
 {
     public class AddressBook
     {
-        public List<Contact> contacts = new List<Contact>();
-        Dictionary<string, List<Contact>> AddressBookName = new Dictionary<string, List<Contact>>();
-        Dictionary<string, List<Contact>> CityWiseDict = new Dictionary<string, List<Contact>>();
-        Dictionary<string, List<Contact>> StateWiseDict = new Dictionary<string, List<Contact>>();
+        public  List<Contact> contacts = new List<Contact>();
+        public Dictionary<string, List<Contact>> AddressBookName = new Dictionary<string, List<Contact>>();
+        public Dictionary<string, List<Contact>> CityWiseDict = new Dictionary<string, List<Contact>>();
+        public Dictionary<string, List<Contact>> StateWiseDict = new Dictionary<string, List<Contact>>();
+        string cs = ConfigurationManager.ConnectionStrings["AddressDb"].ConnectionString;
+        SqlConnection con = null;
 
 
 
@@ -46,6 +52,50 @@ namespace AddressBookSystem
             newContact.email = Console.ReadLine();
 
             contacts.Add(newContact);
+
+            try
+            {
+                Console.WriteLine("Inserting data into database");
+                con = new SqlConnection(cs);
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+
+                string query = "INSERT INTO CONTACTLIST VALUES(@firstName,@lastName,@city,@address,@state,@zip,@Phone,@email)";
+                cmd.Parameters.AddWithValue("@firstName", newContact.firstName);
+                cmd.Parameters.AddWithValue("@lastName", newContact.lastName);
+                cmd.Parameters.AddWithValue("@city", newContact.city);
+                cmd.Parameters.AddWithValue("@state", newContact.state);
+                cmd.Parameters.AddWithValue("@address", newContact.address);
+                cmd.Parameters.AddWithValue("@zip", newContact.zip);
+                cmd.Parameters.AddWithValue("@Phone", newContact.Phone);
+                cmd.Parameters.AddWithValue("@email", newContact.email);
+
+
+                cmd.CommandText = query;
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
+                if (a > 0)
+                {
+                    Console.WriteLine("Insertion is done successfully");
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Some error while inserting");
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                
+            }
+            finally
+            {
+                con.Close();
+
+            }
             return newContact;
         }
         
@@ -104,7 +154,14 @@ namespace AddressBookSystem
                 }
             }
         }
-        
+        public void viewListContact()
+        {
+            foreach(var contact in contacts)
+            {
+                Console.WriteLine(contact.ToString());
+
+            }
+        }
         
 
         public void ViewContact()
@@ -381,7 +438,11 @@ namespace AddressBookSystem
                     if (File.Exists(path))
                     {
                         string data = File.ReadAllText(path);
+                        Console.WriteLine("---------------------------------------------------------------------------------------------");
+                        Console.WriteLine("");
                         Console.WriteLine(data);
+                        Console.WriteLine("---------------------------------------------------------------------------------------------");
+                        Console.WriteLine("");
 
                     }
                     break;
