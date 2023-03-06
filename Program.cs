@@ -92,6 +92,9 @@
                     case 19:
                         ado.RetrieveContactBasedOnDate();
                         break;
+                    case 20:
+                        ado.GetContactBasedonCityOrState();
+                        break;
 
 
 

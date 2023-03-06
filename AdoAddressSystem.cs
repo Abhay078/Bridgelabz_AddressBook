@@ -12,29 +12,29 @@ namespace AddressBookSystem
 {
     public class AdoAddressSystem
     {
-        AddressBook book=new AddressBook();
+        AddressBook book = new AddressBook();
         string cs = ConfigurationManager.ConnectionStrings["AddressDb"].ConnectionString;
         SqlConnection con = null;
         public DataTable RetrieveData()
         {
             try
             {
-                
+
                 con = new SqlConnection(cs);
                 con.Open();
                 string query = "SELECT * FROM CONTACTLIST";
-                SqlDataAdapter adapter = new SqlDataAdapter(query,con);
-                DataTable dt=new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+                DataTable dt = new DataTable();
                 adapter.Fill(dt);
-                foreach(DataRow row in dt.Rows) {
+                foreach (DataRow row in dt.Rows) {
                     Console.WriteLine($" Name:-{row[0]} {row[1]}\tCity :- {row[2]}\tAddress:- {row[3]}\tState :- {row[4]}\tZIP :- {row[5]}\tPhone  :- {row[6]}\tEmail :- {row[7]}");
                 }
                 return dt;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine (ex.Message);
+                Console.WriteLine(ex.Message);
                 return null;
 
             }
@@ -76,7 +76,7 @@ namespace AddressBookSystem
                 cmd.Parameters.AddWithValue("@Phone", Phone);
                 cmd.Parameters.AddWithValue("@email", Email);
                 cmd.CommandText = query;
-                cmd.Connection= con;
+                cmd.Connection = con;
                 int a = cmd.ExecuteNonQuery();
                 if (a > 0)
                 {
@@ -88,7 +88,7 @@ namespace AddressBookSystem
                     Console.WriteLine("Failed to Update data");
                     return false;
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -113,9 +113,9 @@ namespace AddressBookSystem
                 string query = "DELETE FROM CONTACTLIST WHERE firstName=@name";
                 SqlCommand cmd = new SqlCommand();
                 cmd.Parameters.AddWithValue("@name", name);
-                cmd.CommandText= query;
-                cmd.Connection= con;
-                int a= cmd.ExecuteNonQuery();
+                cmd.CommandText = query;
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
                 if (a > 0)
                 {
                     Console.WriteLine("Contact deleted Successfully");
@@ -132,7 +132,7 @@ namespace AddressBookSystem
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
@@ -170,11 +170,82 @@ namespace AddressBookSystem
             finally { con.Close(); }
 
         }
+        //Retrieve contact on city or state using function
+        public bool GetContactBasedonCityOrState()
+        {
+            Console.WriteLine("Press 1 for get contacts across city from database\n Press 2 for Get Contact across State From database");
+            Console.WriteLine("Enter your Choice");
+            string query = "";
+            string state = "";
+            string city = "";
+            int choice = Convert.ToInt32(Console.ReadLine());
+            con = new SqlConnection(cs);
+            try
+            {
+                if (choice == 1)
+                {
+                Console.WriteLine("Enter the name of city ");
+                city = Console.ReadLine();
+                query = "SELECT * FROM fn_CityWiseContact(@city)";
+                    
+                    SqlDataAdapter sd = new SqlDataAdapter();
+                    sd.SelectCommand = new SqlCommand();
+                    sd.SelectCommand.Parameters.AddWithValue("@city", city);
+                    sd.SelectCommand.CommandText = query;
+                    sd.SelectCommand.Connection = con;
+                    DataTable dt = new DataTable();
+                    sd.Fill(dt);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        Console.WriteLine($" Name:-{row[0]} {row[1]}\tCity :- {row[2]}\tAddress:- {row[3]}\tState :- {row[4]}\tZIP :- {row[5]}\tPhone  :- {row[6]}\tEmail :- {row[7]}");
+
+
+                    }
+                    return true;
+                }
+            else if (choice == 2)
+                {
+                Console.WriteLine("Enter the name of state ");
+                state= Console.ReadLine();
+                query = "SELECT * FROM fn_StateWiseContact(@state)";
+                    SqlDataAdapter sd = new SqlDataAdapter();
+                    sd.SelectCommand=new SqlCommand();
+                    sd.SelectCommand.Parameters.AddWithValue("@state", state);
+                    sd.SelectCommand.CommandText = query;
+                    sd.SelectCommand.Connection = con;
+                    DataTable dt = new DataTable();
+                    sd.Fill(dt);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        Console.WriteLine($" Name:-{row[0]} {row[1]}\tCity :- {row[2]}\tAddress:- {row[3]}\tState :- {row[4]}\tZIP :- {row[5]}\tPhone  :- {row[6]}\tEmail :- {row[7]}");
+
+
+                    }
+                    return true;
+
+
+                 }
+                else
+                {
+                Console.WriteLine("Wrong Choice");
+                return false;
+                }
+            
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            
 
 
 
 
 
 
-    }
+
+
+
+    } }
 }
