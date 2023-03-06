@@ -2,7 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,10 +14,12 @@ namespace AddressBookSystem
 {
     public class AddressBook
     {
-        List<Contact> contacts = new List<Contact>();
-        Dictionary<string, List<Contact>> AddressBookName = new Dictionary<string, List<Contact>>();
-        Dictionary<string, List<Contact>> CityWiseDict = new Dictionary<string, List<Contact>>();
-        Dictionary<string, List<Contact>> StateWiseDict = new Dictionary<string, List<Contact>>();
+        public  List<Contact> contacts = new List<Contact>();
+        public Dictionary<string, List<Contact>> AddressBookName = new Dictionary<string, List<Contact>>();
+        public Dictionary<string, List<Contact>> CityWiseDict = new Dictionary<string, List<Contact>>();
+        public Dictionary<string, List<Contact>> StateWiseDict = new Dictionary<string, List<Contact>>();
+        string cs = ConfigurationManager.ConnectionStrings["AddressDb"].ConnectionString;
+        SqlConnection con = null;
 
 
 
@@ -46,8 +52,53 @@ namespace AddressBookSystem
             newContact.email = Console.ReadLine();
 
             contacts.Add(newContact);
+
+            try
+            {
+                Console.WriteLine("Inserting data into database");
+                con = new SqlConnection(cs);
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+
+                string query = "INSERT INTO CONTACTLIST VALUES(@firstName,@lastName,@city,@address,@state,@zip,@Phone,@email)";
+                cmd.Parameters.AddWithValue("@firstName", newContact.firstName);
+                cmd.Parameters.AddWithValue("@lastName", newContact.lastName);
+                cmd.Parameters.AddWithValue("@city", newContact.city);
+                cmd.Parameters.AddWithValue("@state", newContact.state);
+                cmd.Parameters.AddWithValue("@address", newContact.address);
+                cmd.Parameters.AddWithValue("@zip", newContact.zip);
+                cmd.Parameters.AddWithValue("@Phone", newContact.Phone);
+                cmd.Parameters.AddWithValue("@email", newContact.email);
+
+
+                cmd.CommandText = query;
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
+                if (a > 0)
+                {
+                    Console.WriteLine("Insertion is done successfully");
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Some error while inserting");
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                
+            }
+            finally
+            {
+                con.Close();
+
+            }
             return newContact;
         }
+        
 
         public void EditContact(string firstname)
         {
@@ -56,7 +107,7 @@ namespace AddressBookSystem
             firstname = firstname.ToLower();
             foreach (Contact contact in contacts)
             {
-                if (firstname.Equals(contact.firstName.ToLower()))
+                if (firstname.ToLower().Equals(contact.firstName.ToLower()))
                 {
                     Console.WriteLine("Enter first name that you want to update");
                     contact.firstName = Console.ReadLine();
@@ -84,6 +135,7 @@ namespace AddressBookSystem
 
             }
         }
+        
 
         public void DeleteContact(string firstname)
         {
@@ -102,6 +154,15 @@ namespace AddressBookSystem
                 }
             }
         }
+        public void viewListContact()
+        {
+            foreach(var contact in contacts)
+            {
+                Console.WriteLine(contact.ToString());
+
+            }
+        }
+        
 
         public void ViewContact()
         {
@@ -181,6 +242,7 @@ namespace AddressBookSystem
 
 
         }
+       
 
         public void ViewPersonByStateOrCity()
         {
@@ -376,7 +438,11 @@ namespace AddressBookSystem
                     if (File.Exists(path))
                     {
                         string data = File.ReadAllText(path);
+                        Console.WriteLine("---------------------------------------------------------------------------------------------");
+                        Console.WriteLine("");
                         Console.WriteLine(data);
+                        Console.WriteLine("---------------------------------------------------------------------------------------------");
+                        Console.WriteLine("");
 
                     }
                     break;
@@ -476,10 +542,73 @@ namespace AddressBookSystem
                     File.WriteAllText(path, jsonToFile);
 
                     Console.WriteLine("Writing to Json File done....");
+                    
                     break;
 
 
             }
+        }
+
+        public bool SearchTestContact(string city)
+        {
+            city = city.ToLower();
+            foreach (var person in contacts)
+            {
+                if (city.Equals(person.city.ToLower()))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public bool DeleteTestContact(string firstname)
+        {
+            firstname = firstname.ToLower();
+            foreach (var contact in contacts)
+            {
+                if (firstname.Equals(contact.firstName.ToLower()))
+                {
+                    contacts.Remove(contact);
+                    return true;
+                }
+
+            }
+            return false;
+
+        }
+
+        public bool EditTestContact(string firstname)
+        {
+            foreach (Contact contact in contacts)
+            {
+                if (firstname.ToLower().Equals(contact.firstName.ToLower()))
+                {
+                    return true;
+
+                }
+
+
+            }
+            return false;
+        }
+
+        public Contact AddTestContact()
+        {
+            Contact c1 = new Contact
+            {
+                firstName = "Abhay",
+                lastName = "Srivastava",
+                address = "130 Civil",
+                city = "Lmp",
+                state = "UP",
+                Phone = "8953171369",
+                email = "Email@gmail.com"
+
+            };
+            return c1;
+
         }
 
 
